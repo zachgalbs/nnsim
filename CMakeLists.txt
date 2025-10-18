@@ -3,7 +3,7 @@ project(neurodrive CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 # create the executable from main.cpp
-add_executable(neurodrive src/main.cpp)
+add_executable(neurodrive main.cpp)
 
 # link raylib for rendering
 find_package(raylib REQUIRED)

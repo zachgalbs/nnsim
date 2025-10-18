@@ -39,3 +39,23 @@
 
 # debug information files
 *.dwo
+
+# CMake build directories
+build/
+cmake-build-*/
+out/
+
+# IDE and editor folders
+.vscode/
+.idea/
+.vs/
+*.swp
+*.swo
+*~
+
+# macOS specific
+.DS_Store
+
+# Project specific executables
+main
+neurodrive
