@@ -6,7 +6,7 @@ A C++ project using raylib for rendering.
 
 - CMake 3.20 or higher
 - C++17 compatible compiler
-- raylib library
+- raylib library (install path exposed via the `RAYLIB_ROOT` or `RAYLIB_DIR` environment variable)
 
 ## Building the Project
 
@@ -36,6 +36,8 @@ cmake --build .
 vcpkg install raylib
 
 # Option 2: Download raylib from https://www.raylib.com/
+# After installing, point CMake at the unpacked folder:
+setx RAYLIB_ROOT C:\raylib\raylib
 
 # Create build directory
 mkdir build
