@@ -25,7 +25,7 @@ cmake ..
 cmake --build .
 
 # Run the executable
-./neurodrive
+./nnsim
 ```
 
 ### Windows
@@ -46,7 +46,7 @@ cmake ..
 cmake --build . --config Release
 
 # Run the executable
-.\Release\neurodrive.exe
+.\Release\nnsim.exe
 ```
 
 ### Linux
@@ -64,7 +64,7 @@ cmake ..
 cmake --build .
 
 # Run the executable
-./neurodrive
+./nnsim
 ```
 
 ## Project Structure
