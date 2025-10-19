@@ -15,6 +15,7 @@ find_package(raylib REQUIRED)
 add_executable(nnsim
     main.cpp
         main.cpp
+        main.h
 )
 
 target_link_libraries(nnsim PRIVATE raylib::raylib)

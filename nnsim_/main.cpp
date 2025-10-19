@@ -1,14 +1,16 @@
 #include <stdlib.h>
-
+#include <thread>
 #include "raylib.h"
+
+using namespace std;
 
 int main() {
 
     InitWindow(800, 450, "window");
 
-    _sleep(1000);
 
-    CloseWindow(); 
+
+    CloseWindow();
 
     return 0;
 }
