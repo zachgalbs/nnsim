@@ -36,6 +36,7 @@ list(APPEND _raylib_hint_dirs
     "${CMAKE_CURRENT_LIST_DIR}/.."
     "C:/raylib"
     "C:/raylib/raylib"
+    "C:/raylib/w64devkit/x86_64-w64-mingw32"
     "/opt/homebrew"
     "/usr/local"
     "/usr"
