@@ -52,7 +52,7 @@ int main() {
         if (IsKeyDown(KEY_W)) {
             player.vel++;
         }
-        if (IsKeyDown(KEY_S)) {
+        if (IsKeyDown(KEY_S) && player.vel > 0) {
             player.vel--;
         }
 
