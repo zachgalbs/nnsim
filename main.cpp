@@ -9,8 +9,7 @@
 using namespace std;
 
 
-class Car {
-public:
+struct Car {
     float vel;
     float mass = 5;
     float xPos;
