@@ -11,20 +11,20 @@ using namespace std;
 
 class Car {
 public:
-    double vel;
-    double mass = 5;
-    double xPos;
-    double yPos;
-    double vSize = 10;
+    float vel;
+    float mass = 5;
+    float xPos;
+    float yPos;
+    float vSize = 10;
     Color vColor = RED;
-    double theta;
-    double steeringAngle;
+    float theta;
+    float steeringAngle;
 
     // * methods
 
-    Car(double xPos, double yPos) : xPos(xPos), yPos(yPos) {}
+    Car(float xPos, float yPos) : xPos(xPos), yPos(yPos) {}
 
-    void updatePos(double passedTime) {
+    void updatePos(float passedTime) {
         xPos += vel * passedTime * cos(theta);
         yPos += vel * passedTime * sin(theta);
         if (vel > 0) {
@@ -33,7 +33,7 @@ public:
 
     }
     // update the rotation
-    void updateRotation(double passedTime, double idkwhattocallthisbrah) {
+    void updateRotation(float passedTime, float idkwhattocallthisbrah) {
         theta += idkwhattocallthisbrah * passedTime;
     }
 
@@ -71,11 +71,11 @@ int main() {
         rlDisableBackfaceCulling();
         ClearBackground(BLACK);
         // leftmost
-        Vector2 v1 = {static_cast<float>(player.xPos) - 20, static_cast<float>(player.yPos) - 20};
-        Vector2 v2 = {static_cast<float>(player.xPos) - 20, static_cast<float>(player.yPos) + 20};
+        Vector2 v1 = {(player.xPos) + player.vSize * cos(player.theta + 3*PI/4), (player.yPos) + player.vSize * sin(player.theta + 3*PI/4)};
+        Vector2 v2 = {(player.xPos) + player.vSize * cos(player.theta + 3*PI/2), (player.yPos) + player.vSize * sin(player.theta + 3*PI/2)};
         // rightmost
-        Vector2 v3 = {static_cast<float>(player.xPos) + 20, static_cast<float>(player.yPos)};
-        DrawTriangle(v1, v2, v3, player.vColor);
+        Vector2 v3 = {(player.xPos) + player.vSize * cos(player.theta + PI/4), (player.yPos) + player.vSize * sin(player.theta + PI/4)};
+        DrawTriangle(v2, v3, v1, player.vColor);
         EndDrawing();
 
     }
