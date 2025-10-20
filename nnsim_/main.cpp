@@ -42,7 +42,7 @@ public:
 
 int main() {
 
-    InitWindow(screenW, screenH, "window");
+    InitWindow(screenW, screenH, "fuck you");
     SetTargetFPS(120);
 
     Car player(screenW / 2, screenH / 2);
