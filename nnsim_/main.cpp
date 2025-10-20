@@ -49,9 +49,6 @@ int main() {
     std::cout << player.xPos << " " << player.yPos << std::endl << player.vSize;
 
     while(!WindowShouldClose()) {
-
-        ClearBackground(BLACK);
-
         if (IsKeyDown(KEY_W)) {
             player.vel++;
         }
@@ -70,8 +67,11 @@ int main() {
         player.updatePos(GetFrameTime());
 
         BeginDrawing();
-        Vector2 v1 = {static_cast<float>(player.xPos), static_cast<float>(player.yPos) - 20};
-        Vector2 v2 = {static_cast<float>(player.xPos), static_cast<float>(player.yPos) + 20};
+        ClearBackground(BLACK);
+        // leftmost
+        Vector2 v1 = {static_cast<float>(player.xPos) - 20, static_cast<float>(player.yPos) - 20};
+        Vector2 v2 = {static_cast<float>(player.xPos) - 20, static_cast<float>(player.yPos) + 20};
+        // rightmost
         Vector2 v3 = {static_cast<float>(player.xPos) + 20, static_cast<float>(player.yPos)};
         DrawTriangle(v1, v2, v3, player.vColor);
         EndDrawing();
