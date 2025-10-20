@@ -54,6 +54,7 @@ struct Car {
 };
 
 
+
 int main() {
 
     InitWindow(screenW, screenH, "fuck you");
@@ -68,6 +69,11 @@ int main() {
         player.updatePos();
 
         BeginDrawing();
+
+        DrawEllipse(400,225,240,160,WHITE);
+        DrawEllipse(400,225,200,120,BLACK);
+
+
         rlDisableBackfaceCulling();
         ClearBackground(BLACK);
         // leftmost
