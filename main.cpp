@@ -10,25 +10,39 @@ using namespace std;
 
 
 struct Car {
-    float vel;
+    float vel = 0;
     float mass = 5;
-    float xPos;
-    float yPos;
+    float xPos = 0;
+    float yPos = 0;
     float vSize = 10;
     Color vColor = RED;
-    float theta;
-    float steeringAngle;
+    float theta = 0;
+    float steeringAngle = 0;
+    int rpm = 0;
 
     // * methods
 
     Car(float xPos, float yPos) : xPos(xPos), yPos(yPos) {}
 
     void updatePos() {
-        if (IsKeyDown(KEY_W)) {
-            vel++;
+
+        vel += rpm * GetFrameTime() * 1/20;
+
+        if (rpm > 0 && !(IsKeyDown(KEY_W))) {
+            rpm -=  8;
         }
+
+        if (IsKeyDown(KEY_W) && rpm < 8000) {
+            rpm += 20;
+        }
+
         if (IsKeyDown(KEY_S) && vel > 0) {
             vel--;
+
+        }
+
+        if (IsKeyDown(KEY_S) && rpm > 0) {
+            rpm -= 20;
         }
 
         if (IsKeyDown(KEY_A)) {
@@ -73,6 +87,8 @@ int main() {
         DrawEllipse(400,225,240,160,WHITE);
         DrawEllipse(400,225,200,120,BLACK);
 
+
+        DrawText(TextFormat("RPM: %d", player.rpm), 50, 50, 20, WHITE);
 
         rlDisableBackfaceCulling();
         ClearBackground(BLACK);

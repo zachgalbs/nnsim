@@ -16,6 +16,7 @@ add_executable(nnsim
     main.cpp
         main.cpp
         constants.h
+        main.cpp
 )
 
 target_link_libraries(nnsim PRIVATE raylib::raylib)
