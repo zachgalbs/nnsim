@@ -26,16 +26,15 @@ public:
     void updatePos(double passedTime) {
         xPos += vel * passedTime * cos(theta);
         yPos += vel * passedTime * sin(theta);
-
-        theta += steeringAngle * passedTime;
-
         if (vel > 0) {
             vel -= 10 * passedTime;
         }
 
     }
-
-
+    // update the rotation
+    void updateRotation(double passedTime, double idkwhattocallthisbrah) {
+        theta += idkwhattocallthisbrah * passedTime;
+    }
 
 };
 
@@ -56,27 +55,27 @@ int main() {
         if (IsKeyDown(KEY_W)) {
             player.vel++;
         }
-
-        if (IsKeyDown(KEY_A) && player.steeringAngle < 5) {
-            player.steeringAngle ++;
+        if (IsKeyDown(KEY_S)) {
+            player.vel--;
         }
 
-        if (IsKeyDown(KEY_D) && player.steeringAngle > -5) {
-            player.steeringAngle --;
+        if (IsKeyDown(KEY_A)) {
+            player.updateRotation(GetFrameTime(), -2);
+        }
+
+        if (IsKeyDown(KEY_D)) {
+            player.updateRotation(GetFrameTime(), 2);
         }
 
         player.updatePos(GetFrameTime());
 
         BeginDrawing();
-        DrawCircle(player.xPos, player.yPos, player.vSize, player.vColor);
+        Vector2 v1 = {static_cast<float>(player.xPos), static_cast<float>(player.yPos) - 20};
+        Vector2 v2 = {static_cast<float>(player.xPos), static_cast<float>(player.yPos) + 20};
+        Vector2 v3 = {static_cast<float>(player.xPos) + 20, static_cast<float>(player.yPos)};
+        DrawTriangle(v1, v2, v3, player.vColor);
         EndDrawing();
 
-
     }
-
-
-
-
-
     return 0;
 }
