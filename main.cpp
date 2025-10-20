@@ -71,11 +71,11 @@ int main() {
         rlDisableBackfaceCulling();
         ClearBackground(BLACK);
         // leftmost
-        Vector2 v1 = {(player.xPos) + player.vSize * cos(player.theta + 3*PI/4), (player.yPos) + player.vSize * sin(player.theta + 3*PI/4)};
-        Vector2 v2 = {(player.xPos) + player.vSize * cos(player.theta + 3*PI/2), (player.yPos) + player.vSize * sin(player.theta + 3*PI/2)};
+        Vector2 v1 = {(player.xPos) + player.vSize * cos(player.theta + 3*PI/4 ), (player.yPos) + player.vSize * sin(player.theta + 3*PI/4)};
+        Vector2 v2 = {(player.xPos) + player.vSize * cos(player.theta + 5*PI/4), (player.yPos) + player.vSize * sin(player.theta + 5*PI/4)};
         // rightmost
-        Vector2 v3 = {(player.xPos) + player.vSize * cos(player.theta + PI/4), (player.yPos) + player.vSize * sin(player.theta + PI/4)};
-        DrawTriangle(v2, v3, v1, player.vColor);
+        Vector2 v3 = {(player.xPos) + player.vSize * cos(player.theta ), (player.yPos) + player.vSize * sin(player.theta)};
+        DrawTriangle(v1, v2, v3, player.vColor);
         EndDrawing();
 
     }
