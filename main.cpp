@@ -40,14 +40,15 @@ struct Car {
         }
         xPos += vel * GetFrameTime() * cos(theta);
         yPos += vel * GetFrameTime() * sin(theta);
-        if (vel > 0) {
-            vel -= 10 * GetFrameTime();
-        }
+        drag(0.5);
 
     }
     // update the rotation
     void updateRotation(float direction) {
         theta += direction * GetFrameTime();
+    }
+    void drag(float strength) {
+        vel -= vel * strength * GetFrameTime();
     }
 
 };
