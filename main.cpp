@@ -24,17 +24,31 @@ public:
 
     Car(float xPos, float yPos) : xPos(xPos), yPos(yPos) {}
 
-    void updatePos(float passedTime) {
-        xPos += vel * passedTime * cos(theta);
-        yPos += vel * passedTime * sin(theta);
+    void updatePos() {
+        if (IsKeyDown(KEY_W)) {
+            vel++;
+        }
+        if (IsKeyDown(KEY_S) && vel > 0) {
+            vel--;
+        }
+
+        if (IsKeyDown(KEY_A)) {
+            updateRotation(-2);
+        }
+
+        if (IsKeyDown(KEY_D)) {
+            updateRotation(2);
+        }
+        xPos += vel * GetFrameTime() * cos(theta);
+        yPos += vel * GetFrameTime() * sin(theta);
         if (vel > 0) {
-            vel -= 10 * passedTime;
+            vel -= 10 * GetFrameTime();
         }
 
     }
     // update the rotation
-    void updateRotation(float passedTime, float idkwhattocallthisbrah) {
-        theta += idkwhattocallthisbrah * passedTime;
+    void updateRotation(float direction) {
+        theta += direction * GetFrameTime();
     }
 
 };
@@ -50,22 +64,8 @@ int main() {
     std::cout << player.xPos << " " << player.yPos << std::endl << player.vSize;
 
     while(!WindowShouldClose()) {
-        if (IsKeyDown(KEY_W)) {
-            player.vel++;
-        }
-        if (IsKeyDown(KEY_S) && player.vel > 0) {
-            player.vel--;
-        }
 
-        if (IsKeyDown(KEY_A)) {
-            player.updateRotation(GetFrameTime(), -2);
-        }
-
-        if (IsKeyDown(KEY_D)) {
-            player.updateRotation(GetFrameTime(), 2);
-        }
-
-        player.updatePos(GetFrameTime());
+        player.updatePos();
 
         BeginDrawing();
         rlDisableBackfaceCulling();
