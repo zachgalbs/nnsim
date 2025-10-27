@@ -4,18 +4,42 @@
 #include "constants.h"
 #include "car.h"
 #include "track.h"
+#include <vector>
+
 
 using namespace std;
+
+
+
 
 int main() {
 
     InitWindow(screenW, screenH, "fuck you");
     SetTargetFPS(60);
 
+    vector<Vector2> trackPoints = {
+        {220,  260},
+        {420,  200},
+        {680,  190},
+        {940,  230},
+        {1100, 340},
+        {1140, 520},
+        {1000, 660},
+        {740,  720},
+        {480,  700},
+        {300,  600},
+        {220,  460},
+        {220,  260},
+    };
+
+
     std::cout << screenW/2 << screenH/2 << endl;
     Car player(screenW / 2, screenH / 2);
 
     std::cout << player.xPos << " " << player.yPos << std::endl << player.vSize;
+
+
+    Track track = Track(trackPoints, 50, GRAY);
 
     while(!WindowShouldClose()) {
 
@@ -23,7 +47,6 @@ int main() {
 
         BeginDrawing();
 
-        Track track = Track();
         track.DrawTrack();
 
         DrawText(TextFormat("RPM: %d", player.rpm), 50, 50, 20, WHITE);
@@ -41,3 +64,14 @@ int main() {
     }
     return 0;
 }
+
+
+
+void Track::DrawTrack() {
+
+    for (int i = 0; i < trackPoints.size(); i++) {
+        DrawLineBezier(trackPoints[i], trackPoints[i+1], 5.0f, GRAY);
+    }
+}
+
+
