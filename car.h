@@ -22,7 +22,7 @@ class Car {
             vel += rpm * GetFrameTime() * 1/20;
 
             if (rpm > 0 && !(IsKeyDown(KEY_W))) {
-                rpm -=  8;
+                rpm -=  20;
             }
 
             if (IsKeyDown(KEY_W) && rpm < 8000) {

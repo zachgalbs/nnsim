@@ -6,11 +6,7 @@
 #include "track.h"
 #include <vector>
 
-
 using namespace std;
-
-
-
 
 int main() {
 
@@ -18,7 +14,6 @@ int main() {
     SetTargetFPS(60);
 
     vector<Vector2> trackPoints = {
-        {220,  260},
         {420,  200},
         {680,  190},
         {940,  230},
@@ -28,9 +23,12 @@ int main() {
         {740,  720},
         {480,  700},
         {300,  600},
-        {220,  460},
-        {220,  260},
+        {420, 200},
     };
+    for (int i = 0; i < trackPoints.size(); i++) {
+        trackPoints[i].y -= 100;
+        trackPoints[i].x -= 50;
+    }
 
 
     std::cout << screenW/2 << screenH/2 << endl;
@@ -69,8 +67,8 @@ int main() {
 
 void Track::DrawTrack() {
 
-    for (int i = 0; i < trackPoints.size(); i++) {
-        DrawLineBezier(trackPoints[i], trackPoints[i+1], 5.0f, GRAY);
+    for (int i = 0; i < trackPoints.size() - 1; i++) {
+        DrawLineBezier(trackPoints[i], trackPoints[i+1], 50.0f, GRAY);
     }
 }
 
