@@ -1,6 +1,9 @@
 #include <cmath>
 #include "rlgl.h"
 #include "constants.h"
+#include <vector>
+
+using namespace std;
 
 class Car {
     public:
@@ -12,6 +15,8 @@ class Car {
         Color vColor = RED;
         float theta = 0;
         float steeringAngle = 0;
+        vector<float> gearRatios = {1.1f, 2.8f, 4.0f};
+        int gear = 0;
         int rpm = 800;
 
         Car(float xPos, float yPos) : xPos(xPos), yPos(yPos) {}
@@ -24,16 +29,47 @@ class Car {
             xPos += vel * GetFrameTime() * cos(theta);
             yPos += vel * GetFrameTime() * sin(theta);
 
-            rpm = idle_rpm + vel * gear_ratio;
-
         }
+
+        void shiftUp() {
+            if (gear < gearRatios.size() - 1) {
+                gear++;
+                rpm -= 3000;
+            }
+        }
+
+        void shiftDown() {
+            if (gear > 0) {
+                gear--;
+                rpm += 3000;
+            }
+        }
+
         void updateVelocity() {
             float dt = GetFrameTime();
 
-            float throttle = IsKeyDown(KEY_W) ? 1.0f : 0.0f;
+            // float throttle = IsKeyDown(KEY_W) ? 1.0f : 0.0f;
+
+            if (IsKeyDown(KEY_W)) {
+                if (rpm < 8000) rpm *= 1.01;
+                if (rpm < 1000) rpm = 1000;
+            }
+
+            if (IsKeyPressed(KEY_SPACE)) {
+                shiftUp();
+            }
+
+            if (IsKeyPressed(KEY_LEFT_SHIFT)) {
+                shiftDown();
+                if (rpm > 8000) rpm = 8000;
+            }
+
+
+            if (rpm > idle_rpm) rpm -= 100 * dt;
+
             float braking = IsKeyDown(KEY_S) ? 1.0f : 0.0f;
 
-            float engineForce = throttle * engine_strength;
+            float engineForce = rpm * engine_strength * gearRatios[gear];
             float brakeForce = braking * break_strength;
             float frictionForce = vel * friction_strength; // grows with speed
 
@@ -44,6 +80,7 @@ class Car {
             vel += a * dt;
             if (vel < 0) vel = 0; // don't roll backwards 😳
         }
+
         // update the rotation
         void updateRotation() {
             if (IsKeyDown(KEY_A)) {

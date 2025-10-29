@@ -25,9 +25,9 @@ int main() {
         {300,  600},
         {420, 200},
     };
-    for (int i = 0; i < trackPoints.size(); i++) {
-        trackPoints[i].y -= 100;
-        trackPoints[i].x -= 50;
+    for (auto & trackPoint : trackPoints) {
+        trackPoint.y -= 100;
+        trackPoint.x -= 50;
     }
 
 
@@ -48,6 +48,9 @@ int main() {
         track.DrawTrack();
 
         DrawText(TextFormat("RPM: %d", player.rpm), 50, 50, 20, WHITE);
+        DrawText(TextFormat("Gear: %d", player.gear), 50, 75, 20, WHITE);
+
+
 
         rlDisableBackfaceCulling();
         ClearBackground(BLACK);
