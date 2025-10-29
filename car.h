@@ -48,11 +48,12 @@ class Car {
         void updateVelocity() {
             float dt = GetFrameTime();
 
-            // float throttle = IsKeyDown(KEY_W) ? 1.0f : 0.0f;
 
+            // increase less as engine is spinning faster 😳
             if (IsKeyDown(KEY_W)) {
-                if (rpm < 8000) rpm *= 1.01;
-                if (rpm < 1000) rpm = 1000;
+                if (rpm < 8000) {
+                    rpm *= 1 + (1 - rpm/max_rpm) * dt;
+                }
             }
 
             if (IsKeyPressed(KEY_SPACE)) {
@@ -65,7 +66,9 @@ class Car {
             }
 
 
-            if (rpm > idle_rpm) rpm -= 100 * dt;
+            if (rpm > idle_rpm && !IsKeyDown(KEY_W)) {
+                rpm -= (rpm-idle_rpm) * rpm_decay_rate * dt;
+            }
 
             float braking = IsKeyDown(KEY_S) ? 1.0f : 0.0f;
 
