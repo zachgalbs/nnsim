@@ -1,5 +1,6 @@
 #include <cmath>
 #include "rlgl.h"
+#include "constants.h"
 
 class Car {
     public:
@@ -11,51 +12,47 @@ class Car {
         Color vColor = RED;
         float theta = 0;
         float steeringAngle = 0;
-        int rpm = 0;
-
-        // * methods
+        int rpm = 800;
 
         Car(float xPos, float yPos) : xPos(xPos), yPos(yPos) {}
 
         void updatePos() {
 
-            vel += rpm * GetFrameTime() * 1/20;
+            updateVelocity();
+            updateRotation();
 
-            if (rpm > 0 && !(IsKeyDown(KEY_W))) {
-                rpm -=  20;
-            }
+            xPos += vel * GetFrameTime() * cos(theta);
+            yPos += vel * GetFrameTime() * sin(theta);
 
-            if (IsKeyDown(KEY_W) && rpm < 8000) {
-                rpm += 20;
-            }
+            rpm = idle_rpm + vel * gear_ratio;
 
-            if (IsKeyDown(KEY_S) && vel > 0) {
-                vel--;
+        }
+        void updateVelocity() {
+            float dt = GetFrameTime();
 
-            }
+            float throttle = IsKeyDown(KEY_W) ? 1.0f : 0.0f;
+            float braking = IsKeyDown(KEY_S) ? 1.0f : 0.0f;
 
-            if (IsKeyDown(KEY_S) && rpm > 0) {
-                rpm -= 20;
-            }
+            float engineForce = throttle * engine_strength;
+            float brakeForce = braking * break_strength;
+            float frictionForce = vel * friction_strength; // grows with speed
 
+            float force = engineForce - frictionForce - brakeForce;
+
+            float a = force / mass; // derived from f=ma 😂✌️
+
+            vel += a * dt;
+            if (vel < 0) vel = 0; // don't roll backwards 😳
+        }
+        // update the rotation
+        void updateRotation() {
             if (IsKeyDown(KEY_A)) {
-                updateRotation(-2);
+                theta -= turn_strength * GetFrameTime();
             }
 
             if (IsKeyDown(KEY_D)) {
-                updateRotation(2);
+                theta += turn_strength * GetFrameTime();
             }
-            xPos += vel * GetFrameTime() * cos(theta);
-            yPos += vel * GetFrameTime() * sin(theta);
-            drag(0.5);
-
-        }
-        // update the rotation
-        void updateRotation(float direction) {
-            theta += direction * GetFrameTime();
-        }
-        void drag(float strength) {
-            vel -= vel * strength * GetFrameTime();
         }
 };
 
