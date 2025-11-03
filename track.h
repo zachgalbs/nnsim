@@ -9,6 +9,6 @@ class Track {
     int width;
     Color color;
     public:
-        Track(const vector<Vector2> &trackPoints, int width = 50, Color color = GRAY) : color(color), trackPoints(trackPoints) {}
+        Track(const vector<Vector2> &trackPoints, int width = 50, Color color = GRAY) : color(color), trackPoints(trackPoints), width(width) {}
         void DrawTrack();
 };

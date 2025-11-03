@@ -13,23 +13,27 @@ int main() {
     InitWindow(screenW, screenH, "fuck you");
     SetTargetFPS(60);
 
-    vector<Vector2> trackPoints = {
-        {420,  200},
-        {680,  190},
-        {940,  230},
-        {1100, 340},
-        {1140, 520},
-        {1000, 660},
-        {740,  720},
-        {480,  700},
-        {300,  600},
-        {420, 200},
+    // For a closed Catmull-Rom spline, we need to duplicate points at the beginning and end ts
+    vector<Vector2> trackShape = {
+        {300, 200},
+        {900, 200},
+        {1000, 300},
+        {900, 400},
+        {300, 400},
+        {200, 300}
     };
-    for (auto & trackPoint : trackPoints) {
-        trackPoint.y -= 100;
-        trackPoint.x -= 50;
-    }
 
+    // Wrap points for closed loop: add last two points at start, first two points at end
+    vector<Vector2> f1TrackPoints;
+    f1TrackPoints.push_back(trackShape[trackShape.size() - 2]); // Second to last
+    f1TrackPoints.push_back(trackShape[trackShape.size() - 1]); // Last
+    for (const auto& point : trackShape) {
+        f1TrackPoints.push_back(point);
+    }
+    f1TrackPoints.push_back(trackShape[0]); // First
+    f1TrackPoints.push_back(trackShape[1]); // Second
+
+    Track f1Track = Track(f1TrackPoints, 60, GRAY);
 
     std::cout << screenW/2 << screenH/2 << endl;
     Car player(screenW / 2, screenH / 2);
@@ -37,15 +41,13 @@ int main() {
     std::cout << player.xPos << " " << player.yPos << std::endl << player.vSize;
 
 
-    Track track = Track(trackPoints, 50, GRAY);
-
     while(!WindowShouldClose()) {
 
         player.updatePos();
 
         BeginDrawing();
 
-        track.DrawTrack();
+        f1Track.DrawTrack();
 
         DrawText(TextFormat("RPM: %d", player.rpm), 50, 50, 20, WHITE);
         DrawText(TextFormat("Gear: %d", player.gear), 50, 75, 20, WHITE);
@@ -69,10 +71,7 @@ int main() {
 
 
 void Track::DrawTrack() {
-
-    for (int i = 0; i < trackPoints.size() - 1; i++) {
-        DrawLineBezier(trackPoints[i], trackPoints[i+1], 50.0f, GRAY);
-    }
+    DrawSplineCatmullRom(trackPoints.data(), trackPoints.size(), width, color);
 }
 
 
