@@ -13,33 +13,13 @@ int main() {
     InitWindow(screenW, screenH, "fuck you");
     SetTargetFPS(60);
 
-    // For a closed Catmull-Rom spline, we need to duplicate points at the beginning and end ts
-    vector<Vector2> trackShape = {
-        {300, 200},
-        {900, 200},
-        {1000, 300},
-        {900, 400},
-        {300, 400},
-        {200, 300}
-    };
-
-    // Wrap points for closed loop: add last two points at start, first two points at end
-    vector<Vector2> f1TrackPoints;
-    f1TrackPoints.push_back(trackShape[trackShape.size() - 2]); // Second to last
-    f1TrackPoints.push_back(trackShape[trackShape.size() - 1]); // Last
-    for (const auto& point : trackShape) {
-        f1TrackPoints.push_back(point);
-    }
-    f1TrackPoints.push_back(trackShape[0]); // First
-    f1TrackPoints.push_back(trackShape[1]); // Second
-
-    Track f1Track = Track(f1TrackPoints, 60, GRAY);
 
     std::cout << screenW/2 << screenH/2 << endl;
     Car player(screenW / 2, screenH / 2);
 
     std::cout << player.xPos << " " << player.yPos << std::endl << player.vSize;
 
+    Track f1Track = CreateOvalTrack();
 
     while(!WindowShouldClose()) {
 
@@ -51,7 +31,6 @@ int main() {
 
         DrawText(TextFormat("RPM: %d", player.rpm), 50, 50, 20, WHITE);
         DrawText(TextFormat("Gear: %d", player.gear), 50, 75, 20, WHITE);
-
 
 
         rlDisableBackfaceCulling();
@@ -68,10 +47,28 @@ int main() {
     return 0;
 }
 
-
-
 void Track::DrawTrack() {
     DrawSplineCatmullRom(trackPoints.data(), trackPoints.size(), width, color);
 }
 
+Track CreateOvalTrack() {
+    vector<Vector2> trackShape = {
+        {320, 180},
+        {960, 180},
+        {1120, 360},
+        {960, 540},
+        {320, 540},
+        {160, 360}
+    };
+    // Wrap points for closed loop: add last two points at start, first two points at end
+    vector<Vector2> f1TrackPoints;
+    f1TrackPoints.push_back(trackShape[trackShape.size() - 2]); // Second to last
+    f1TrackPoints.push_back(trackShape[trackShape.size() - 1]); // Last
+    for (const auto& point : trackShape) {
+        f1TrackPoints.push_back(point);
+    }
+    f1TrackPoints.push_back(trackShape[0]); // First
+    f1TrackPoints.push_back(trackShape[1]); // Second
 
+    return Track(f1TrackPoints, 60, GRAY);
+}
